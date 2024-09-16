@@ -5,7 +5,15 @@
 #include <stack>
 using namespace std;
 
+// ~~~~~~~~~~~`Algorithm`~~~~~~~~~~~~~
+// step 1 : sort all nodes in order of finishing times = topo sorttttt
+// [ O(n)]
+// step 2 : transpose the graph
+// step 3 : dfs according to the finishing time stack
+
 // Depth-First Search to fill the stack with nodes in the order of their finishing times
+
+// this is topological sort ACTUALLY
 void dfs(int node, unordered_map<int, bool> &visited, unordered_map<int, list<int>> &adj, stack<int> &st) {
     visited[node] = true;
     for (auto i : adj[node]) {
@@ -16,13 +24,13 @@ void dfs(int node, unordered_map<int, bool> &visited, unordered_map<int, list<in
     st.push(node); // Push the node to the stack after visiting all its neighbors
 }
 
-// Reverse DFS to collect all nodes in the current SCC
-void revdfs(int node, unordered_map<int, list<int>> &rev_adj, stack<int> &st, unordered_map<int, bool> &visited, vector<int> &temp) {
+// DFS on reverese to collect all nodes in the current SCC
+void dfsOnReverse(int node, unordered_map<int, list<int>> &rev_adj, stack<int> &st, unordered_map<int, bool> &visited, vector<int> &temp) {
     visited[node] = true;
     temp.push_back(node); // Add the node to the current SCC
     for (auto nbr : rev_adj[node]) {
         if (!visited[nbr]) {
-            revdfs(nbr, rev_adj, st, visited, temp);
+            dfsOnReverse(nbr, rev_adj, st, visited, temp);
         }
     }
 }
@@ -37,7 +45,7 @@ vector<vector<int>> SCC(vector<vector<int>> &edges, int v) {
         int v = edge[1];
         adj[u].push_back(v); // Add edge to the adjacency list
     }
-
+//              IRL,  *topo sort
     // Step 1: Perform DFS on the original graph to fill the stack
     unordered_map<int, bool> visited;
     for (int i = 0; i < v; i++) {
@@ -62,10 +70,29 @@ vector<vector<int>> SCC(vector<vector<int>> &edges, int v) {
         st.pop();
         if (!visited[node]) {
             vector<int> temp;
-            revdfs(node, rev_adj, st, visited, temp);
-            sccs.push_back(temp); // Add the current SCC to the list of SCCs
+            dfsOnReverse(node, rev_adj, st, visited, temp);
+            sccs.push_back(temp); 
+            // Add the current SCC to the list of SCCs
         }
     }
 
     return sccs; // Return the list of SCCs
+}
+
+int main()
+{
+    int V = 5;
+    vector<vector<int> > edges{{ 0,1}, { 1, 2 }, { 2, 0 }, { 3, 2 }, { 4, 3 }};
+
+    vector<vector<int>> ans;
+    ans = SCC(edges, V);
+    
+    cout << "Strongly Connected Components are:\n";
+    for (auto x : ans) {
+        for (auto y : x) {
+            cout << y << " ";
+        }
+        cout << "\n";
+    }
+    return 0;
 }
