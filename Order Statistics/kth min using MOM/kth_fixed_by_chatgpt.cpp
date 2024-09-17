@@ -42,7 +42,7 @@ int selectMedianOfMedian(vector<int> &arr, int low, int high) {
     } else {
         vector<int> arrOfMed;
         for (int i = low; i < high; i += 5) {
-            vector<int> group(arr.begin() + i, arr.begin() + min(i + 5, int(arr.size())));
+            vector<int> group(arr.begin() + i, arr.begin() + min(i + 4, int(arr.size())));
             arrOfMed.push_back(findMedian(group));
         }
         return selectMedianOfMedian(arrOfMed, 0, arrOfMed.size());
