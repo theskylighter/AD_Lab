@@ -170,7 +170,7 @@ int main()
 
     else
     {
-        cout << "Enter size between 0 to 100" << endl;
+        cout << "ERROR : You have Entered size between 0 to 100" << endl;
     }
     return 0;
 }
