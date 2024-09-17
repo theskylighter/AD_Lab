@@ -29,11 +29,12 @@ void read(string &filename)
     }
     else
     {
-        file >> n;
-        
-        file.ignore();
-        int count = 1;
         cout << "opening file" << endl;
+        file >> n;
+
+        file.ignore();
+
+        int count = 1;
         string line;
         while (getline(file, line))
         {
@@ -107,29 +108,30 @@ vector<int> forwardSub()
     for (int i = 0; i < n; i++)
     {
         x[i] = matB[i];
-        for (int j = 0;j<i;j++)
+        for (int j = 0; j < i; j++)
         {
             x[i] = x[i] - matA[i][j] * x[j];
         }
-        x[i]= x[i]/matA[i][i];
+        x[i] = x[i] / matA[i][i];
     }
     return x;
 }
-vector<int> backwardSub(){
+vector<int> backwardSub()
+{
     vector<int> x(n);
-    
-    
-    for (int i = n-1; i>=0; i--)
+
+    // i may represent row here ,
+    for (int i = n - 1; i >= 0; i--)
     {
         x[i] = matB[i];
-        for (int j = i+1;j<n;j++)
+
+        for (int j = i + 1; j < n; j++)
         {
             x[i] = x[i] - matA[i][j] * x[j];
         }
-        x[i]= x[i]/matA[i][i];
+        x[i] = x[i] / matA[i][i];
     }
     return x;
-
 }
 
 int main()
@@ -138,34 +140,37 @@ int main()
     read(fname);
     // printAB();
 
-    if(n<100){
-    if (isLower())
+    if (n < 100)
     {
-        cout << "it is lower  triangular matrix" << endl;
-        vector<int> ans=forwardSub();
-        cout<<"solution:"<<endl;
-        for(int i:ans){
-            cout<<i<<endl;
+        if (isLower())
+        {
+            cout << "it is lower  triangular matrix" << endl;
+            vector<int> ans = forwardSub();
+            cout << "solution:" << endl;
+            for (int i : ans)
+            {
+                cout << i << endl;
+            }
         }
+        else if (isUpper())
+        {
+            cout << "it is Upper  triangular matrix" << endl;
+            vector<int> ans = backwardSub();
+            cout << "solution:" << endl;
+            for (int i : ans)
+            {
+                cout << i << endl;
+            }
+        }
+        else
+        {
+            cout << "neither uppper nor lower triangular matrix" << endl;
+        }
+    }
 
-    }
-    else if (isUpper())
-    {
-        cout << "it is Upper  triangular matrix" << endl;
-        vector<int> ans=backwardSub();
-        cout<<"solution:"<<endl;
-        for(int i:ans){
-            cout<<i<<endl;
-        }
-    }
     else
     {
-        cout << "neither uppper nor lower triangular matrix" << endl;
+        cout << "Enter size between 0 to 100" << endl;
     }
-    }
-
-    else{
-    cout<<"Enter size between 0 to 100"<<endl;
-    }    
     return 0;
 }
