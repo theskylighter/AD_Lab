@@ -67,50 +67,45 @@ void insertionSort(vector<float>& arr) {
 }
 
 // Helper function for counting sort used in radix sort 
-void countingSortForRadix(vector<int>& arr, int k) {
-    int n = arr.size();
-    vector<int> output(n);
+void counting_Sort(vector<int> &temp, int n, int k){
+    vector<int> ans(n);
     int count[10] = {0};
 
+    //storing the count
+    for(int i = 0; i < n; i++){
+        count[(temp[i]/k) % 10]++;
+    }
+
+    for(int i = 1; i < 10; i++){
+        count[i] += count[i-1];
+    }
+
+    //make ans array
+    for(int i = n-1; i >= 0; i--){
+        ans[count[(temp[i]/k) % 10] - 1] = temp[i];
+        count[(temp[i] / k) % 10]--;
+    }
+
     for (int i = 0; i < n; i++) {
-        int index = (arr[i] / k) % 10;
-        count[index]++;
-    }
-
-    for (int i = 1; i < 10; i++) {
-        count[i] += count[i - 1];
-    }
-
-    for (int i = n - 1; i >= 0; i--) {
-        int index = (arr[i] / k) % 10;
-        output[count[index] - 1] = arr[i];
-        count[index]--;
-    }
-
-    for (int i = 0; i < n; i++) {
-        arr[i] = output[i];
+        temp[i] = ans[i];
     }
 }
 
-// Radix Sort (only for integers)
-void radixSort(vector<float>& arr) {
+void radixSort(vector<float> &arr){
+    int n = arr.size();
+    vector<int> temp(n);
 
-    vector<int> intArr(arr.begin(), arr.end());  // Convert to integers for radix sort
-
-    int maxVal=INT_MIN;
-    for(int i=0;i<arr.size();i++){
-        if(arr[i]>maxVal){
-            maxVal=arr[i];
-        }
-    }
-    // int maxVal = *max_element(intArr.begin(), intArr.end());
-
-    for (int k = 1; maxVal / k > 0; k *= 10) {
-        countingSortForRadix(intArr, k);
+    for(int i = 0; i < n; i++){
+        temp[i] = static_cast<int>(round(arr[i]));
     }
 
-    for (int i = 0; i < arr.size(); i++) {
-        arr[i] = intArr[i];
+    int maxEle = *max_element(temp.begin(), temp.end());
+    for(int i = 1; maxEle/i > 0; i *= 10){
+        counting_Sort(temp, n, i);
+    }
+
+    for (int i = 0; i < n; i++) {
+        arr[i] = temp[i];
     }
 }
 
