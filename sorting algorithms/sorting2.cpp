@@ -48,8 +48,9 @@ int i=0,j=0,k=p;
     while(i<n1&&j<n2){
         if(L[i]<R[j])
             arr[k] = L[i++];
-        else
+        else{
             arr[k] = R[j++];
+        }
         k++;
     }
     while(i<n1){
@@ -57,7 +58,9 @@ int i=0,j=0,k=p;
     }
     while(j<n2){
         arr[k++]=R[j++];
+        
     }
+
     
 }
 void mergesort(vector<int>&arr,int low,int high){
@@ -75,7 +78,7 @@ merge(arr,low,mid,high);
 int main(){
     vector<int> arr={2,9,3,6,7,12,8,20};
     
-    cout<<"INPUT ARRAY : \n";
+    cout<<"\nINPUT ARRAY : \n";
     for(int i=0;i<arr.size();i++){
         cout<<arr[i]<<" ";
     }
@@ -86,17 +89,6 @@ int main(){
         cout<<arr[i]<<" ";
     }
 
-
-    vector<int> arr2={2,9,3,6,7,12,8,20};
-    cout<<"\nINPUT ARRAY : \n";
-    for(int i=0;i<arr.size();i++){
-        cout<<arr[i]<<" ";
-    }
-
-    QuickSort(arr,0,arr.size()-1);
-    cout<<"\nafter QUICK sort ARRAY : \n";
-    for(int i=0;i<arr.size();i++){
-        cout<<arr[i]<<" ";
-    }
+    cout<<endl;
     return 0;
 }
