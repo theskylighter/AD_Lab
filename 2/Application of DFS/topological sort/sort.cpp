@@ -75,11 +75,20 @@ int main()
 {
     graph g;
 
+    // g.addEdge(0, 1);
+    // g.addEdge(1, 2);
+    // g.addEdge(3, 1);
+    // g.addEdge(3, 2);
     g.addEdge(0, 1);
     g.addEdge(1, 2);
-    g.addEdge(3, 1);
-    g.addEdge(3, 2);
+    g.addEdge(2,0);
+    g.addEdge(2,3);
+    g.addEdge(3, 4);
+    g.addEdge(4,5);
+    g.addEdge(5,6);
+    g.addEdge(6,3);
 
+// { 0,1}, { 1, 2 }, { 2, 0 }, { 3, 2 }, { 4, 3 }
     g.dispAdj();
     cout << endl;
 

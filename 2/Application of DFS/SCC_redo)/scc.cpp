@@ -4,7 +4,7 @@
 #include <unordered_map>
 #include <stack>
 using namespace std;
-
+// ~~~~~~~~~~~`kosaraju`~~~~~~~~~~~~~
 // ~~~~~~~~~~~`Algorithm`~~~~~~~~~~~~~
 // step 1 : sort all nodes in order of finishing times = topo sorttttt
 // [ O(n)]
@@ -62,7 +62,7 @@ vector<vector<int>> SCC(vector<vector<int>> &edges, int v) {
         rev_adj[v].push_back(u); // Reverse the direction of the edge
     }
 
-    // Step 3: Perform DFS on the transposed graph
+    // Step 3: Perform DFS on the transposed graph (in the order of stack filled earlier)
     visited.clear();
     vector<vector<int>> sccs;
     while (!st.empty()) {
@@ -82,7 +82,7 @@ vector<vector<int>> SCC(vector<vector<int>> &edges, int v) {
 int main()
 {
     int V = 5;
-    vector<vector<int> > edges{{ 0,1}, { 1, 2 }, { 2, 0 }, { 3, 2 }, { 4, 3 }};
+    vector<vector<int> > edges{{ 0,1}, { 1, 2 }, { 2, 0 }, { 2,3 }, { 3,4 }, { 4,5}, { 5,6 }, { 6,3 }};
 
     vector<vector<int>> ans;
     ans = SCC(edges, V);

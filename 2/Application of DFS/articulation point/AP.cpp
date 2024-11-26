@@ -58,13 +58,16 @@ void dfs(int currentNode, vector<vector<int>> &adj, vector<int> &disc, vector<in
     disc[currentNode] = low[currentNode] = ++time;
 
     for (int nbr : adj[currentNode]) {
+        
+        // nbr is Unvisited
         if (disc[nbr] == -1) { 
-            // nbr is not visited
             parent[nbr] = currentNode;
             childCount++;
             dfs(nbr, adj, disc, low, parent, APs);
 
-            // Check if the subtree rooted at neighborNode has a connection back to one of currentNode's ancestors
+            // check & update
+            // if the subtree rooted at neighborNode(child) has a connection back to one of currentNode's ancestors
+
             low[currentNode] = min(low[currentNode], low[nbr]);
 
             // currentNode is an articulation point in two cases:
@@ -72,12 +75,16 @@ void dfs(int currentNode, vector<vector<int>> &adj, vector<int> &disc, vector<in
             if (parent[currentNode] == -1 && childCount > 1) {
                 APs.push_back(currentNode);
             }
-            // 2) currentNode is not the root and one of its child can't connect to currentNode or any of its ancestors
+            // 2) currentNode is not the root &
+            //  one of its child can't connect to currentNode or any of its ancestors
             if (parent[currentNode] != -1 && low[nbr] >= disc[currentNode]) {
                 APs.push_back(currentNode);
             }
         } 
-        else if (nbr != parent[currentNode]) { 
+
+        // nbr has been visited but not parent 
+        else if (nbr != parent[currentNode]) {
+            // ! this is condition for alternate connection to ancestors 
             // Update lowestTime[currentNode] for back edge
             low[currentNode] = min(low[currentNode], disc[nbr]);
         }
@@ -88,6 +95,7 @@ vector<int> tarjan(vector<vector<int>> &adj) {
     int n = adj.size();
     vector<int> disc(n, -1); // Discovery time of nodes
     vector<int> lowestTime(n, -1);    // Lowest discovery time reachable
+                                      // (low-link)
     vector<int> parent(n, -1);        // Parent of nodes in DFS tree
     vector<int> APs;
 

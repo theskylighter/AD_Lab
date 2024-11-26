@@ -33,12 +33,11 @@ bool bfs(vector<vector<int>> &rGraph, int s, int t, vector<int> &parent){
 }
 
 int ford_fulkerson(vector<vector<int>>& graph, int s, int t) {
-    // residual graph
-    vector<vector<int>> rGraph = graph; 
+    vector<vector<int>>     h;
     int max_flow = 0;
     vector<int> parent(graph.size(), -1);
+    int min_flow=INT_MAX;
     while(bfs(rGraph,s,t,parent)){
-        int min_flow=INT_MAX;
         for(int v=t; v!=s; v=parent[v]){
             int u=parent[v];
             min_flow=min(min_flow,rGraph[u][v]);

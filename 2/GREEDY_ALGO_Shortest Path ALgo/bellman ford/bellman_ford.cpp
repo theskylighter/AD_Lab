@@ -16,8 +16,8 @@ void printDist(vector<int> &dist){
 vector<int> ford(vector<vector<int>>& adj, int v, int s){
     vector<int> dist(v,1e8);
     dist[s]=0;
-//N-1 iterations
         int i,j,w;
+//N-1 iterations
     for(int k=0;k<v-1;k++) {
         for(auto it:adj){
             i=it[0];

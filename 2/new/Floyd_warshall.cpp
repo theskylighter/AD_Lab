@@ -8,11 +8,18 @@ void floyd(vector<vector<int>> &matrix){
             if(matrix[i][j]==-1) matrix[i][j]=INT_MAX; //-1 denote that there is no direct path from vertex u to v
         }
     }
+
+    // k ~ via
     for(int k=0 ; k<n ;k++){
+        // i~i
         for(int i=0 ; i<n ;i++){
+            // j~j
             for(int j=0 ; j<n ; j++){
+                // checks & updates i=>k=>j  for All `j` ;
+                // going via `k`, if dis(i=>j) reduces
                 if (matrix[i][k] != INT_MAX && matrix[k][j] != INT_MAX){
-                matrix[i][j]=min(matrix[i][j] , matrix[i][k] + matrix[k][j]);}
+                    matrix[i][j]=min(matrix[i][j] , matrix[i][k] + matrix[k][j]);
+                }
             }
         }
     }

@@ -10,6 +10,7 @@ void printDist(vector<int> &dist){
     cout<<"minimum distance array"<<endl;
     for(auto i:dist) cout<<i<<" ";
     cout<<endl;}
+
 void dij(vector<vector<pair<int,int>>>& adj,int v, int s){
 
 // making a min heap
@@ -34,7 +35,7 @@ void dij(vector<vector<pair<int,int>>>& adj,int v, int s){
         for(auto i : adj[node]){
             int weight=i.second;
             int nextNode = i.first;
-            // if new distance is less than prev dis
+            // if new distance is less than current dis
             if(dis + weight< dist[nextNode])
             {
                 // then update distance array
